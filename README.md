@@ -1,0 +1,1 @@
+# galite-demo-inventory-app
