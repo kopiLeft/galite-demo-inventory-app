@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<modules>
+    <!--Inventory-->
+    <module ident="1000" label="INVENTORY" help="Inventory management" />
+</modules>
