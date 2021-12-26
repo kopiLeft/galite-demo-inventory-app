@@ -19,7 +19,7 @@ plugins {
   id("org.jetbrains.kotlin.jvm") version "1.5.30"
   id("io.spring.dependency-management") version "1.0.10.RELEASE"
   id("com.vaadin") version "21.0.9"
-  id("org.gretty") version "3.0.1"
+  id("org.gretty") version "3.0.6"
 }
 
 vaadin {
