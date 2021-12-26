@@ -14,18 +14,21 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package org.kopi.galite.demo
+package org.kopi.galite.demo.database
 
-import org.kopi.galite.visual.ui.vaadin.base.GaliteServlet
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.DatabaseConfig
+import org.kopi.galite.visual.db.Slf4jSqlInfoLogger
 
-/**
- * A customized servlet.
- */
-class MyServlet : GaliteServlet() {
+const val DEMO_URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
+const val DEMO_DRIVER = "org.h2.Driver"
+const val DEMO_USER = "admin"
+const val DEMO_PASSWORD = "admin"
 
-  override fun servletInitialized() {
-    super.servletInitialized()
+val dbConfig = DatabaseConfig {
+  sqlLogger = Slf4jSqlInfoLogger
+}
 
-    org.kopi.galite.demo.database.main()
-  }
+fun connect() {
+  Database.connect(DEMO_URL, DEMO_DRIVER, DEMO_USER, DEMO_PASSWORD, databaseConfig = dbConfig)
 }

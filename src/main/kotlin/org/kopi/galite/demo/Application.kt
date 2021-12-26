@@ -52,6 +52,7 @@ class GaliteApplication : VApplication(GaliteRegistry()) {
         createConnection(driver, database, username, password, true, schema)
       }
     } catch (exception: Throwable) {
+      exception.printStackTrace()
       null
     }
   }

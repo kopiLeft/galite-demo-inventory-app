@@ -14,18 +14,9 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package org.kopi.galite.demo
+package org.kopi.galite.demo.database
 
-import org.kopi.galite.visual.ui.vaadin.base.GaliteServlet
-
-/**
- * A customized servlet.
- */
-class MyServlet : GaliteServlet() {
-
-  override fun servletInitialized() {
-    super.servletInitialized()
-
-    org.kopi.galite.demo.database.main()
-  }
+fun main() {
+  migration1()
+  migration2()
 }
