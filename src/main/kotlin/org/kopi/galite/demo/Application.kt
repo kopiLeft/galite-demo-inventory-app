@@ -31,11 +31,11 @@ class GaliteApplication : VApplication(GaliteRegistry()) {
   override val sologanImage get() = "ui/vaadin/slogan.png"
   override val logoImage get() = "logo_galite.png"
   override val logoHref get() = "https://kopileft.github.io/Galite/"
-  override val alternateLocale get() = Locale("de", "AT")
+  override val alternateLocale get() = Locale.UK
   override val title get() = "Inventory app"
   override val supportedLocales
     get() =
-      arrayOf(
+      arrayOf(Locale.UK,
               Locale("de", "AT"),
               Locale.FRANCE,
               Locale("ar", "TN"))
