@@ -19,4 +19,6 @@ package org.kopi.galite.demo.database
 fun main() {
   migration1()
   migration2()
+  migration3()
+  migration4()
 }

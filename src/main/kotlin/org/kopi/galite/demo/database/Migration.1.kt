@@ -17,8 +17,6 @@
 package org.kopi.galite.demo.database
 
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.kopi.galite.visual.db.Dummy
 import org.kopi.galite.visual.db.FAVORITENId
@@ -39,18 +37,5 @@ fun migration1() {
     SchemaUtils.create(Modules, UserRights, GroupRights, GroupParties, Symbols,
                        Favorites, Users, Groups, References, Dummy)
     SchemaUtils.createSequence(FAVORITENId)
-
-    Users.insert {
-      it[uc] = 0
-      it[ts] = 0
-      it[shortName] = DEMO_USER
-      it[name] = "administrator"
-      it[character] = DEMO_USER
-      it[active] = true
-      it[createdOn] = CurrentTimestamp()
-      it[createdBy] = 1
-      it[changedOn] = CurrentTimestamp()
-      it[changedBy] = 1
-    }
   }
 }
