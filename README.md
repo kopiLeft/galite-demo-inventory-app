@@ -1,7 +1,7 @@
-#Galite demo 
+# Galite demo 
 
-#Inventory app
-###Running the demo application
+# Inventory app
+### Running the demo application
 Before running the app make sure that you have Java 8 (or higher) JDK installed.
 
 To quickly start the app, type this into your terminal:
