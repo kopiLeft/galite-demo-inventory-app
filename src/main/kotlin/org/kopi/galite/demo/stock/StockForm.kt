@@ -32,6 +32,11 @@ class StockForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   override val title = "Stocks"
   val page = page("Stock")
 
+  init {
+    insertMenus()
+    insertCommands()
+  }
+
   val block = page.insertBlock(StockBlock()) {
     command(item = report) {
       createReport(StockR())

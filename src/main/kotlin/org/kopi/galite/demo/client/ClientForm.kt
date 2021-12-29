@@ -40,6 +40,11 @@ class ClientForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   override val locale = Locale.UK
   override val title = "Clients"
 
+  init {
+    insertMenus()
+    insertCommands()
+  }
+
   val list = actor(
           ident = "list",
           menu = action,

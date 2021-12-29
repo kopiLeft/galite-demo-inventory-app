@@ -37,6 +37,11 @@ class TaxRuleForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   override val title = "TaxRules"
   val page = page("TaxRule")
 
+  init {
+    insertMenus()
+    insertCommands()
+  }
+
   val list = actor(
           ident = "list",
           menu = action,

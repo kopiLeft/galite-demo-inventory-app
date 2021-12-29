@@ -34,6 +34,11 @@ class BillForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   override val title = "Bills"
   val page = page("Bill")
 
+  init {
+    insertMenus()
+    insertCommands()
+  }
+
   val tb1 = page.insertBlock(BlockBill()) {
     command(item = report) {
       createReport(BillR())

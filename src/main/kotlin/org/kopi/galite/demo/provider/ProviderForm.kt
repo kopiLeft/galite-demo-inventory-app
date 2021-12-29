@@ -24,15 +24,18 @@ import org.kopi.galite.demo.database.Provider
 import org.kopi.galite.visual.domain.IMAGE
 import org.kopi.galite.visual.domain.INT
 import org.kopi.galite.visual.domain.STRING
-import org.kopi.galite.visual.dsl.common.Icon
 import org.kopi.galite.visual.dsl.form.Block
-import org.kopi.galite.visual.dsl.form.Key
 import org.kopi.galite.visual.dsl.form.ReportSelectionForm
 
 class ProviderForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   override val locale = Locale.UK
   override val title = "Providers"
   val page = page("Provider")
+
+  init {
+    insertMenus()
+    insertCommands()
+  }
 
   val block = page.insertBlock(BlockProvider()) {
     command(item = report) {

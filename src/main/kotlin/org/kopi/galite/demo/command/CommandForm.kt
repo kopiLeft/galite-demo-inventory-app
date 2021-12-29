@@ -36,6 +36,11 @@ class CommandForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   override val title = "Commands"
   val page = page("Command")
 
+  init {
+    insertMenus()
+    insertCommands()
+  }
+
   val list = actor(
           ident = "list",
           menu = action,

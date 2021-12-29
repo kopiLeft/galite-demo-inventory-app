@@ -17,6 +17,10 @@
  */
 package org.kopi.galite.demo.common
 
+import kotlin.reflect.KProperty
+
+import java.util.WeakHashMap
+
 import org.kopi.galite.visual.dsl.common.Actor
 import org.kopi.galite.visual.dsl.common.Command
 import org.kopi.galite.visual.dsl.common.Icon
@@ -27,41 +31,74 @@ import org.kopi.galite.visual.dsl.form.Key
 import org.kopi.galite.visual.form.Commands
 
 interface IFormDefault {
+  fun Form.insertMenus() {
+    file; edit; action
+  }
+
+  fun Form.insertActors() {
+    quit
+    _break
+    autofill
+    editItem
+    editItemS
+    searchOperator
+    insertLine
+    deleteLine
+    menuQuery
+    serialQuery
+    insertMode
+    save
+    delete
+    createReport
+    createDynamicReport
+    help
+    showHideFilter
+    report
+  }
+
+  fun Form.insertCommands() {
+    autofill
+    editItem
+    editItemS
+
+    resetForm; quitForm; helpForm
+  }
+
   // -------------------------------------------------------------------
   // MENUS
   // -------------------------------------------------------------------
-  val file: Menu
-  val edit: Menu
-  val action: Menu
+  val Form.file: Menu
+  val Form.edit: Menu
+  val Form.action: Menu
 
   // -------------------------------------------------------------------
   // ACTORS
   // -------------------------------------------------------------------
-  val quit: Actor
-  val _break: Actor
-  val autofill: Actor
-  val editItem: Actor
-  val editItemS: Actor
-  val searchOperator: Actor
-  val insertLine: Actor
-  val deleteLine: Actor
-  val menuQuery: Actor
-  val serialQuery: Actor
-  val insertMode: Actor
-  val save: Actor
-  val delete: Actor
-  val createReport: Actor
-  val createDynamicReport: Actor
-  val help: Actor
-  val showHideFilter: Actor
-  val report: Actor
+  val Form.quit: Actor
+  val Form._break: Actor
+  val Form.autofill: Actor
+  val Form.editItem: Actor
+  val Form.editItemS: Actor
+  val Form.searchOperator: Actor
+  val Form.insertLine: Actor
+  val Form.deleteLine: Actor
+  val Form.menuQuery: Actor
+  val Form.serialQuery: Actor
+  val Form.insertMode: Actor
+  val Form.save: Actor
+  val Form.delete: Actor
+  val Form.createReport: Actor
+  val Form.createDynamicReport: Actor
+  val Form.help: Actor
+  val Form.showHideFilter: Actor
+  val Form.report: Actor
 
   // -------------------------------------------------------------------
   // FORM-LEVEL COMMANDS
   // -------------------------------------------------------------------
-  val resetForm: Command
-  val quitForm: Command
-  val helpForm: Command
+  val Form.resetForm: Command
+  val Form.quitForm: Command
+  val Form.helpForm: Command
 
   // -------------------------------------------------------------------
   // BLOCK-LEVEL COMMANDS
@@ -78,214 +115,259 @@ interface IFormDefault {
   val Block.showHideFilterCmd: Command
 }
 
-open class FormDefaultImpl : IFormDefault, Form() {
+open class FormDefaultImpl: Form(), IFormDefault {
+
   override val title: String = ""
 
   // --------------------MENUS-----------------
-  final override val file = menu("File")
-  final override val edit = menu("Edit")
-  final override val action = menu("Action")
+  override val Form.file by LazyWithReceiver<Form, Menu> { menu("File") }
+
+  override val Form.edit by LazyWithReceiver<Form, Menu> { menu("Edit") }
+
+  override val Form.action by LazyWithReceiver<Form, Menu> { menu("Action") }
 
   // --------------------ACTORS----------------
-  override val quit = actor(
-    ident = "Quit",
-    menu = file,
-    label = "Quit",
-    help = "Quit",
-  ) {
-    key = Key.ESCAPE
-    icon = Icon.QUIT
+  override val Form.quit by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "Quit",
+      menu = file,
+      label = "Quit",
+      help = "Quit",
+    ) {
+      key = Key.ESCAPE
+      icon = Icon.QUIT
+    }
   }
 
-  override val _break = actor(
-    ident = "Break",
-    menu = file,
-    label = "Break",
-    help = "Break",
-  ) {
-    key = Key.F3
-    icon = Icon.BREAK
+  override val Form._break by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "Break",
+      menu = file,
+      label = "Break",
+      help = "Break",
+    ) {
+      key = Key.F3
+      icon = Icon.BREAK
+    }
   }
 
-  override val autofill = actor(
-    ident = "Autofill",
-    menu = edit,
-    label = "Autofill",
-    help = "Autofill",
-  ) {
-    key = Key.F2
+  override val Form.autofill by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "Autofill",
+      menu = edit,
+      label = "Autofill",
+      help = "Autofill",
+    ) {
+      key = Key.F2
+    }
   }
 
-  override val editItem = actor(
-    ident = "EditItem",
-    menu = edit,
-    label = "EditItem",
-    help = "EditItem",
-  ) {
-    key = Key.SHIFT_F2
+  override val Form.editItem by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "EditItem",
+      menu = edit,
+      label = "EditItem",
+      help = "EditItem",
+    ) {
+      key = Key.SHIFT_F2
+    }
   }
 
-  override val editItemS = actor(
-    ident = "EditItem_S",
-    menu = edit,
-    label = "EditItem_S",
-    help = "EditItem_S",
-  ) {
-    key = Key.F2
+  override val Form.editItemS by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "EditItem_S",
+      menu = edit,
+      label = "EditItem_S",
+      help = "EditItem_S",
+    ) {
+      key = Key.F2
+    }
   }
 
-  override val searchOperator = actor(
-    ident = "SearchOperator",
-    menu = edit,
-    label = "SearchOperator",
-    help = "SearchOperator",
-  ) {
-    key = Key.F5
-    icon = Icon.SEARCH_OP
+  override val Form.searchOperator by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "SearchOperator",
+      menu = edit,
+      label = "SearchOperator",
+      help = "SearchOperator",
+    ) {
+      key = Key.F5
+      icon = Icon.SEARCH_OP
+    }
   }
 
-  override val insertLine = actor(
-    ident = "InsertLine",
-    menu = edit,
-    label = "InsertLine",
-    help = "InsertLine",
-  ) {
-    key = Key.F4
-    icon = Icon.INSERT_LINE
+  override val Form.insertLine by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "InsertLine",
+      menu = edit,
+      label = "InsertLine",
+      help = "InsertLine",
+    ) {
+      key = Key.F4
+      icon = Icon.INSERT_LINE
+    }
   }
 
-  override val deleteLine = actor(
-    ident = "DeleteLine",
-    menu = edit,
-    label = "DeleteLine",
-    help = "DeleteLine",
-  ) {
-    key = Key.F5
-    icon = Icon.DELETE_LINE
+  override val Form.deleteLine by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "DeleteLine",
+      menu = edit,
+      label = "DeleteLine",
+      help = "DeleteLine",
+    ) {
+      key = Key.F5
+      icon = Icon.DELETE_LINE
+    }
   }
 
-  override val menuQuery = actor(
-    ident = "MenuQuery",
-    menu = action,
-    label = "MenuQuery",
-    help = "MenuQuery",
-  ) {
-    key = Key.F8
-    icon = Icon.MENU_QUERY
+  override val Form.menuQuery by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "MenuQuery",
+      menu = action,
+      label = "MenuQuery",
+      help = "MenuQuery",
+    ) {
+      key = Key.F8
+      icon = Icon.MENU_QUERY
+    }
   }
 
-  override val serialQuery = actor(
-    ident = "SerialQuery",
-    menu = action,
-    label = "SerialQuery",
-    help = "SerialQuery",
-  ) {
-    key = Key.F6
-    icon = Icon.SERIAL_QUERY
+  override val Form.serialQuery by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "SerialQuery",
+      menu = action,
+      label = "SerialQuery",
+      help = "SerialQuery",
+    ) {
+      key = Key.F6
+      icon = Icon.SERIAL_QUERY
+    }
   }
 
-  override val insertMode = actor(
-    ident = "InsertMode",
-    menu = action,
-    label = "InsertMode",
-    help = "InsertMode",
-  ) {
-    key = Key.F4
-    icon = Icon.INSERT
+  override val Form.insertMode by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "InsertMode",
+      menu = action,
+      label = "InsertMode",
+      help = "InsertMode",
+    ) {
+      key = Key.F4
+      icon = Icon.INSERT
+    }
   }
 
-  override val save = actor(
-    ident = "Save",
-    menu = action,
-    label = "Save",
-    help = "Save",
-  ) {
-    key = Key.F7
-    icon = Icon.SAVE
+  override val Form.save by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "Save",
+      menu = action,
+      label = "Save",
+      help = "Save",
+    ) {
+      key = Key.F7
+      icon = Icon.SAVE
+    }
   }
 
-  override val delete = actor(
-    ident = "Delete",
-    menu = action,
-    label = "Delete",
-    help = "Delete",
-  ) {
-    key = Key.F5
-    icon = Icon.DELETE
+  override val Form.delete by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "Delete",
+      menu = action,
+      label = "Delete",
+      help = "Delete",
+    ) {
+      key = Key.F5
+      icon = Icon.DELETE
+    }
   }
 
-  override val createReport = actor(
-    ident = "CreateReport",
-    menu = action,
-    label = "CreateReport",
-    help = "CreateReport",
-  ) {
-    key = Key.F8
-    icon = Icon.PREVIEW
+  override val Form.createReport by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "CreateReport",
+      menu = action,
+      label = "CreateReport",
+      help = "CreateReport",
+    ) {
+      key = Key.F8
+      icon = Icon.PREVIEW
+    }
   }
 
-  override val createDynamicReport = actor(
-    ident = "CreateDynamicReport",
-    menu = action,
-    label = "CreateDynamicReport",
-    help = "CreateDynamicReport",
-  ) {
-    key = Key.F11
-    icon = Icon.PREVIEW
+  override val Form.createDynamicReport by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "CreateDynamicReport",
+      menu = action,
+      label = "CreateDynamicReport",
+      help = "CreateDynamicReport",
+    ) {
+      key = Key.F11
+      icon = Icon.PREVIEW
+    }
   }
 
-  override val help = actor(
-    ident = "Help",
-    menu = action,
-    label = "Help",
-    help = "Help",
-  ) {
-    key = Key.F1
-    icon = Icon.HELP
+  override val Form.help by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "Help",
+      menu = action,
+      label = "Help",
+      help = "Help",
+    ) {
+      key = Key.F1
+      icon = Icon.HELP
+    }
   }
 
-  override val showHideFilter = actor(
-    ident = "ShowHideFilter",
-    menu = action,
-    label = "ShowHideFilter",
-    help = "ShowHideFilter",
-  ) {
-    key = Key.SHIFT_F12
-    icon = Icon.SEARCH_OP
+  override val Form.showHideFilter by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "ShowHideFilter",
+      menu = action,
+      label = "ShowHideFilter",
+      help = "ShowHideFilter",
+    ) {
+      key = Key.SHIFT_F12
+      icon = Icon.SEARCH_OP
+    }
   }
 
-  override val report = actor(
-    ident = "report",
-    menu = action,
-    label = "CreateReport",
-    help = "Create report",
-  ) {
-    key = Key.F8
-    icon = Icon.REPORT
+  override val Form.report by LazyWithReceiver<Form, Actor> {
+    actor(
+      ident = "report",
+      menu = action,
+      label = "CreateReport",
+      help = "Create report",
+    ) {
+      key = Key.F8
+      icon = Icon.REPORT
+    }
   }
 
   // -------------------------------------------------------------------
   // FORM-LEVEL COMMANDS
   // -------------------------------------------------------------------
-  override val resetForm = command(item = _break) {
-    resetForm()
-  }
-
-  override val quitForm = command(item = quit) {
-    quitForm()
-  }
-
-  override val helpForm = command(item = help) {
-    showHelp()
-  }
-
-  // -------------------------------------------------------------------
-  // BLOCK-LEVEL COMMANDS
-  // -------------------------------------------------------------------
-  override val Block.breakCmd: Command
-    get() = command(item = _break) {
-      resetBlock()
+  override val Form.resetForm by LazyWithReceiver<Form, Command> {
+    command(item = _break) {
+      resetForm()
     }
+  }
+
+  override val Form.quitForm by LazyWithReceiver<Form, Command> {
+    command(item = quit) {
+      quitForm()
+    }
+  }
+
+  override val Form.helpForm by LazyWithReceiver<Form, Command> {
+    command(item = help) {
+      showHelp()
+    }
+  }
+
+    // -------------------------------------------------------------------
+    // BLOCK-LEVEL COMMANDS
+    // -------------------------------------------------------------------
+    override val Block.breakCmd: Command
+      get() = command(item = _break) {
+        resetBlock()
+      }
 
   override val Block.recursiveQueryCmd: Command
     get() = command(item = menuQuery) {
@@ -330,4 +412,15 @@ open class FormDefaultImpl : IFormDefault, Form() {
     get() = command(item = showHideFilter) {
       showHideFilter()
     }
+}
+
+class LazyWithReceiver<This, Return>(val initializer: This.() -> Return) {
+  private val values = WeakHashMap<This, Return>()
+
+  @Suppress("UNCHECKED_CAST")
+  operator fun getValue(thisRef: Any, property: KProperty<*>): Return = synchronized(values)
+  {
+    thisRef as This
+    return values.getOrPut(thisRef) { thisRef.initializer() }
+  }
 }

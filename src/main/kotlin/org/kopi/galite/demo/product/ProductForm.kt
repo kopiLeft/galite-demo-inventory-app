@@ -36,6 +36,11 @@ class ProductForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   override val title = "Products"
   val page = page("Product")
 
+  init {
+    insertMenus()
+    insertCommands()
+  }
+
   val block = page.insertBlock(BlockProduct())
 
   inner class BlockProduct : Block(1, 1, "Products") {
