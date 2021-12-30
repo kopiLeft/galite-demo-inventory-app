@@ -61,7 +61,7 @@ interface IFormDefault {
     editItem
     editItemS
 
-    resetForm; quitForm; helpForm
+    quitForm; resetForm; helpForm
   }
 
   // -------------------------------------------------------------------

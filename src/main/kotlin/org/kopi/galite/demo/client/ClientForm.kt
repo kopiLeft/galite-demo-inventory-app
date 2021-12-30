@@ -76,10 +76,8 @@ class ClientForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   }
 
   val clientsPage= page("Clients")
-  val contactsPage= page("Contacts")
   val detailsPage= page("Details")
   val clientsBlock = clientsPage.insertBlock(Clients())
-  val k = contactsPage.insertBlock(Clients())
   val salesBlock = clientsPage.insertBlock(Sales())
 
 
@@ -95,22 +93,30 @@ class ClientForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
     val fstnameClt = visit(domain = STRING(25), position = at(2, 1)) {
       label = "First Name"
       help = "The client first name"
-      columns(c.firstNameClt)
+      columns(c.firstNameClt) {
+        priority = 1
+      }
     }
     val nameClt = visit(domain = STRING(25), position = at(2, 2)) {
       label = "Last name"
       help = "The client last name"
-      columns(c.lastNameClt)
+      columns(c.lastNameClt) {
+        priority = 2
+      }
     }
     val ageClt = visit(domain = INT(3), position = at(2, 3)) {
       label = "Age"
       help = "The client age"
-      columns(c.ageClt)
+      columns(c.ageClt) {
+        priority = 3
+      }
     }
     val email = visit(domain = STRING(25), position = at(3, 1)) {
       label = "Email"
       help = "The mail adress"
-      columns(c.mail)
+      columns(c.mail) {
+        priority = 4
+      }
     }
     val addressClt = visit(domain = STRING(20), position = at(3, 2)) {
       label = "Address"
