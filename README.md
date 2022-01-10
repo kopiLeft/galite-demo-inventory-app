@@ -6,8 +6,8 @@ Before running the app make sure that you have Java 8 (or higher) JDK installed.
 
 To quickly start the app, type this into your terminal:
 ```
-git clone https://github.com/kopiLeft/Galite.git
-cd Galite
+git clone https://github.com/kopiLeft/galite-demo-inventory-app.git
+cd galite-demo-inventory-app
 ./gradlew appRun
 ```
 
