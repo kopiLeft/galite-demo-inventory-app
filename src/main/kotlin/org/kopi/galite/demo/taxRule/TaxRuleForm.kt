@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,9 +17,9 @@
 package org.kopi.galite.demo.taxRule
 
 import java.util.Locale
+
 import org.kopi.galite.demo.common.FormDefaultImpl
 import org.kopi.galite.demo.common.IFormDefault
-
 import org.kopi.galite.demo.database.TaxRule
 import org.kopi.galite.visual.domain.BOOL
 import org.kopi.galite.visual.domain.Fixed
@@ -31,10 +31,9 @@ import org.kopi.galite.visual.dsl.form.Access
 import org.kopi.galite.visual.dsl.form.Block
 import org.kopi.galite.visual.dsl.form.Key
 import org.kopi.galite.visual.dsl.form.ReportSelectionForm
+import org.kopi.galite.visual.form.Commands
 
-class TaxRuleForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
-  override val locale = Locale.UK
-  override val title = "TaxRules"
+class TaxRuleForm : ReportSelectionForm(title = "TaxRules", locale = Locale.UK), IFormDefault by FormDefaultImpl() {
   val page = page("TaxRule")
 
   init {
@@ -43,7 +42,6 @@ class TaxRuleForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   }
 
   val list = actor(
-          ident = "list",
           menu = action,
           label = "list",
           help = "Display List",
@@ -52,56 +50,70 @@ class TaxRuleForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
     icon = Icon.LIST
   }
 
-  val block = page.insertBlock(TaxRuleBlock()) {
-    command(item = report) {
-      createReport(TaxRuleR())
+  val block = page.insertBlock(TaxRuleBlock())
+
+  inner class TaxRuleBlock : Block("TaxRule", 1, 10) {
+    val u = table(TaxRule)
+
+    val idTaxe = hidden(domain = INT(20)) {
+      label = "ID"
+      help = "The tax ID"
+      columns(u.idTaxe)
     }
-    saveCmd
-    recursiveQueryCmd
-    breakCmd
-    deleteCmd
-  }
-}
 
-class TaxRuleBlock : Block(1, 10, "TaxRule") {
-  val u = table(TaxRule)
-
-  val idTaxe = hidden(domain = INT(20)) {
-    label = "ID"
-    help = "The tax ID"
-    columns(u.idTaxe)
-  }
-
-  val taxName = mustFill(domain = STRING(20), position = at(1, 1)) {
-    label = "Name"
-    help = "The tax name"
-    columns(u.taxName) {
-      priority = 1
+    val taxName = mustFill(domain = STRING(20), position = at(1, 1)) {
+      label = "Name"
+      help = "The tax name"
+      columns(u.taxName) {
+        priority = 1
+      }
     }
-  }
 
-  val rate = mustFill(domain = INT(25), position = at(2, 1)) {
-    label = "Rate"
-    help = "The tax rate in %"
-    columns(u.rate) {
-      priority = 1
+    val rate = mustFill(domain = INT(25), position = at(2, 1)) {
+      label = "Rate"
+      help = "The tax rate in %"
+      columns(u.rate) {
+        priority = 1
+      }
     }
-  }
 
-  val informations = visit(domain = STRING(80, 50, 10, Fixed.ON, styled = true), position = at(3, 1)) {
-    label = "tax informations"
-    help = "The tax informations"
-    columns(u.informations) {
-      priority = 1
+    val informations = visit(domain = STRING(80, 50, 10, Fixed.ON, styled = true), position = at(3, 1)) {
+      label = "tax informations"
+      help = "The tax informations"
+      columns(u.informations) {
+        priority = 1
+      }
     }
-  }
 
-  init {
-    blockVisibility(Access.VISIT, Mode.QUERY)
-  }
+    val percent = visit(domain = BOOL, position = at(2, 2)) {
+      label = "%"
+      help = "The tax rate in %"
+    }
 
-  val percent = visit(domain = BOOL, position = at(2, 2)) {
-    label = "%"
-    help = "The tax rate in %"
+    init {
+      blockVisibility(Access.VISIT, Mode.QUERY)
+
+      command(item = report) {
+        createReport {
+          TaxRuleR()
+        }
+      }
+
+      command(item = save) {
+        saveBlock()
+      }
+
+      command(item = menuQuery) {
+        Commands.recursiveQuery(block)
+      }
+
+      command(item = _break) {
+        resetBlock()
+      }
+
+      command(item = delete) {
+        deleteBlock()
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,15 +31,11 @@ import org.kopi.galite.visual.report.VReport
 /**
  * Product Report
  */
-class ProductReport : Report() {
-  override val locale = Locale.UK
-
-  override val title = "Products"
+class ProductReport : Report(title = "Products", locale = Locale.UK) {
 
   val action = menu("Action")
 
   val quit = actor(
-          ident = "quit",
           menu = action,
           label = "Quit",
           help = "Quit",
@@ -49,7 +45,6 @@ class ProductReport : Report() {
   }
 
   val csv = actor(
-          ident = "CSV",
           menu = action,
           label = "CSV",
           help = "CSV Format",
@@ -59,7 +54,6 @@ class ProductReport : Report() {
   }
 
   val xls = actor(
-          ident = "XLS",
           menu = action,
           label = "XLS",
           help = "Excel (XLS) Format",
@@ -69,7 +63,6 @@ class ProductReport : Report() {
   }
 
   val xlsx = actor(
-          ident = "XLSX",
           menu = action,
           label = "XLSX",
           help = "Excel (XLSX) Format",
@@ -79,7 +72,6 @@ class ProductReport : Report() {
   }
 
   val pdf = actor(
-          ident = "PDF",
           menu = action,
           label = "PDF",
           help = "PDF Format",

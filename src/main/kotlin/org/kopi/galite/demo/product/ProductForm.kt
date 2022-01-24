@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,9 +17,9 @@
 package org.kopi.galite.demo.product
 
 import java.util.Locale
+
 import org.kopi.galite.demo.common.FormDefaultImpl
 import org.kopi.galite.demo.common.IFormDefault
-
 import org.kopi.galite.demo.database.Product
 import org.kopi.galite.visual.domain.CodeDomain
 import org.kopi.galite.visual.domain.DECIMAL
@@ -31,9 +31,7 @@ import org.kopi.galite.visual.dsl.form.Access
 import org.kopi.galite.visual.dsl.form.Block
 import org.kopi.galite.visual.dsl.form.ReportSelectionForm
 
-class ProductForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
-  override val locale = Locale.UK
-  override val title = "Products"
+class ProductForm : ReportSelectionForm(title = "Products", locale = Locale.UK), IFormDefault by FormDefaultImpl() {
   val page = page("Product")
 
   init {
@@ -43,7 +41,7 @@ class ProductForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
 
   val block = page.insertBlock(BlockProduct())
 
-  inner class BlockProduct : Block(1, 1, "Products") {
+  inner class BlockProduct : Block("Products", 1, 1) {
     val u = table(Product)
 
     val idPdt = hidden(domain = INT(20)) {
@@ -80,7 +78,9 @@ class ProductForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
       blockVisibility(Access.VISIT, Mode.QUERY)
 
       command(item = report) {
-        createReport(ProductReport())
+        createReport {
+          ProductReport()
+        }
       }
     }
   }

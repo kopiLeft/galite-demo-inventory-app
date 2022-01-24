@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,15 +35,11 @@ import org.kopi.galite.visual.type.Decimal
 /**
  * Bill Report
  */
-class BillR : Report() {
-  override val locale = Locale.UK
-
-  override val title = "Bills_Report"
+class BillR : Report("Bills_Report", locale = Locale.UK) {
 
   val action = menu("Action")
 
   val csv = actor(
-          ident = "CSV",
           menu = action,
           label = "CSV",
           help = "CSV Format",
@@ -53,7 +49,6 @@ class BillR : Report() {
   }
 
   val xls = actor(
-          ident = "XLS",
           menu = action,
           label = "XLS",
           help = "Excel (XLS) Format",
@@ -63,7 +58,6 @@ class BillR : Report() {
   }
 
   val xlsx = actor(
-          ident = "XLSX",
           menu = action,
           label = "XLSX",
           help = "Excel (XLSX) Format",
@@ -73,7 +67,6 @@ class BillR : Report() {
   }
 
   val pdf = actor(
-          ident = "PDF",
           menu = action,
           label = "PDF",
           help = "PDF Format",

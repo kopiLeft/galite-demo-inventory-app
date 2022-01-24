@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -45,7 +45,7 @@ dependencies {
 
   testImplementation(kotlin("test-junit"))
 
-  implementation("org.kopi", "galite-core", "1.0.0-beta.3")
+  implementation("org.kopi", "galite-core", "1.0.0-beta.4")
   implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
 
   implementation("com.vaadin", "vaadin-core") {

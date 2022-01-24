@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,15 +35,10 @@ import org.kopi.galite.visual.visual.WindowController
 /**
  * Client Report
  */
-class ClientR : Report() {
-  override val locale = Locale.UK
-
-  override val title = "Clients_Report"
-
+class ClientR : Report(title = "Clients_Report", locale = Locale.UK) {
   val action = menu("Action")
 
   val csv = actor(
-          ident = "CSV",
           menu = action,
           label = "CSV",
           help = "CSV Format",
@@ -53,7 +48,6 @@ class ClientR : Report() {
   }
 
   val xls = actor(
-          ident = "XLS",
           menu = action,
           label = "XLS",
           help = "Excel (XLS) Format",
@@ -63,7 +57,6 @@ class ClientR : Report() {
   }
 
   val xlsx = actor(
-          ident = "XLSX",
           menu = action,
           label = "XLSX",
           help = "Excel (XLSX) Format",
@@ -73,7 +66,6 @@ class ClientR : Report() {
   }
 
   val pdf = actor(
-          ident = "PDF",
           menu = action,
           label = "PDF",
           help = "PDF Format",
@@ -83,7 +75,6 @@ class ClientR : Report() {
   }
 
   val editColumnData = actor(
-    ident = "EditColumnData",
     menu = action,
     label = "Edit Column Data",
     help = "Edit Column Data",
@@ -93,7 +84,6 @@ class ClientR : Report() {
   }
 
   val helpForm = actor(
-          ident = "helpForm",
           menu = action,
           label = "Help",
           help = " Help"

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -32,15 +32,11 @@ import org.kopi.galite.visual.report.VReport
 /**
  * Tax Rules Report
  */
-class TaxRuleR : Report() {
-  override val locale = Locale.UK
-
-  override val title = "TaxRules_Report"
+class TaxRuleR : Report(title = "TaxRules_Report", locale = Locale.UK) {
 
   val action = menu("Action")
 
   val csv = actor(
-          ident = "CSV",
           menu = action,
           label = "CSV",
           help = "CSV Format",
@@ -50,7 +46,6 @@ class TaxRuleR : Report() {
   }
 
   val xls = actor(
-          ident = "XLS",
           menu = action,
           label = "XLS",
           help = "Excel (XLS) Format",
@@ -60,7 +55,6 @@ class TaxRuleR : Report() {
   }
 
   val xlsx = actor(
-          ident = "XLSX",
           menu = action,
           label = "XLSX",
           help = "Excel (XLSX) Format",
@@ -70,7 +64,6 @@ class TaxRuleR : Report() {
   }
 
   val pdf = actor(
-          ident = "PDF",
           menu = action,
           label = "PDF",
           help = "PDF Format",

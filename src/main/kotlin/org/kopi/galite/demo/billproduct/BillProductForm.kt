@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,9 +17,9 @@
 package org.kopi.galite.demo.billproduct
 
 import java.util.Locale
+
 import org.kopi.galite.demo.common.FormDefaultImpl
 import org.kopi.galite.demo.common.IFormDefault
-
 import org.kopi.galite.demo.database.Bill
 import org.kopi.galite.demo.database.BillProduct
 import org.kopi.galite.demo.database.Product
@@ -28,9 +28,7 @@ import org.kopi.galite.visual.domain.INT
 import org.kopi.galite.visual.dsl.form.Block
 import org.kopi.galite.visual.dsl.form.ReportSelectionForm
 
-class BillProductForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
-  override val locale = Locale.UK
-  override val title = "Bill products"
+class BillProductForm : ReportSelectionForm("Bill products", Locale.UK), IFormDefault by FormDefaultImpl() {
   val page = page("Bill product")
 
   init {
@@ -40,12 +38,14 @@ class BillProductForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl()
 
   val tb1 = page.insertBlock(BlockBillProduct()) {
     command(item = report) {
-      createReport(BillProductR())
+      createReport {
+        BillProductR()
+      }
     }
   }
 }
 
-class BlockBillProduct : Block(1, 1, "bill product") {
+class BlockBillProduct : Block("bill product", 1, 1) {
   val u = table(BillProduct)
   val v = table(Product)
   val w = table(Bill)

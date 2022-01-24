@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,9 +17,9 @@
 package org.kopi.galite.demo.provider
 
 import java.util.Locale
+
 import org.kopi.galite.demo.common.FormDefaultImpl
 import org.kopi.galite.demo.common.IFormDefault
-
 import org.kopi.galite.demo.database.Provider
 import org.kopi.galite.visual.domain.IMAGE
 import org.kopi.galite.visual.domain.INT
@@ -27,9 +27,7 @@ import org.kopi.galite.visual.domain.STRING
 import org.kopi.galite.visual.dsl.form.Block
 import org.kopi.galite.visual.dsl.form.ReportSelectionForm
 
-class ProviderForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
-  override val locale = Locale.UK
-  override val title = "Providers"
+class ProviderForm : ReportSelectionForm(title = "Providers", locale = Locale.UK), IFormDefault by FormDefaultImpl() {
   val page = page("Provider")
 
   init {
@@ -39,12 +37,14 @@ class ProviderForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
 
   val block = page.insertBlock(BlockProvider()) {
     command(item = report) {
-      createReport(ProviderR())
+      createReport {
+        ProviderR()
+      }
     }
   }
 }
 
-class BlockProvider : Block(1, 1, "Providers") {
+class BlockProvider : Block("Providers", 1, 1) {
   val u = table(Provider)
 
   val idProvider = hidden(domain = INT(20)) {

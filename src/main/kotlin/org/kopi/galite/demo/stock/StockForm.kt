@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,9 +17,9 @@
 package org.kopi.galite.demo.stock
 
 import java.util.Locale
+
 import org.kopi.galite.demo.common.FormDefaultImpl
 import org.kopi.galite.demo.common.IFormDefault
-
 import org.kopi.galite.demo.database.Product
 import org.kopi.galite.demo.database.Provider
 import org.kopi.galite.demo.database.Stock
@@ -27,9 +27,8 @@ import org.kopi.galite.visual.domain.INT
 import org.kopi.galite.visual.dsl.form.Block
 import org.kopi.galite.visual.dsl.form.ReportSelectionForm
 
-class StockForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
-  override val locale = Locale.UK
-  override val title = "Stocks"
+class StockForm : ReportSelectionForm(title = "Stocks", locale = Locale.UK), IFormDefault by FormDefaultImpl() {
+
   val page = page("Stock")
 
   init {
@@ -39,12 +38,14 @@ class StockForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
 
   val block = page.insertBlock(StockBlock()) {
     command(item = report) {
-      createReport(StockR())
+      createReport {
+        StockR()
+      }
     }
   }
 }
 
-class StockBlock : Block(1, 1, "Stock") {
+class StockBlock : Block("Stock", 1, 1) {
   val u = table(Stock)
   val v = table(Product)
   val w = table(Provider)

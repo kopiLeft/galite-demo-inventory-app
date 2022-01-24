@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,9 +17,9 @@
 package org.kopi.galite.demo.command
 
 import java.util.Locale
+
 import org.kopi.galite.demo.common.FormDefaultImpl
 import org.kopi.galite.demo.common.IFormDefault
-
 import org.kopi.galite.demo.database.Client
 import org.kopi.galite.demo.database.Command
 import org.kopi.galite.visual.domain.CodeDomain
@@ -31,9 +31,7 @@ import org.kopi.galite.visual.dsl.form.Block
 import org.kopi.galite.visual.dsl.form.Key
 import org.kopi.galite.visual.dsl.form.ReportSelectionForm
 
-class CommandForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
-  override val locale = Locale.UK
-  override val title = "Commands"
+class CommandForm : ReportSelectionForm(title = "Commands", locale = Locale.UK), IFormDefault by FormDefaultImpl() {
   val page = page("Command")
 
   init {
@@ -42,7 +40,6 @@ class CommandForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   }
 
   val list = actor(
-          ident = "list",
           menu = action,
           label = "list",
           help = "Display List",
@@ -52,7 +49,6 @@ class CommandForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   }
 
   val dynamicReport = actor(
-    ident = "dynamicReport",
     menu = action,
     label = "DynamicReport",
     help = " Create Dynamic Report",
@@ -63,14 +59,18 @@ class CommandForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
 
   val tb1 = page.insertBlock(BlockCommand()) {
     command(item = report) {
-      createReport(CommandR())
+      createReport {
+        CommandR()
+      }
     }
 
     command(item = list) {
       recursiveQuery()
     }
 
-    breakCmd
+    command(item = _break) {
+      resetBlock()
+    }
 
     command(item = serialQuery) {
       serialQuery()
@@ -82,7 +82,7 @@ class CommandForm : ReportSelectionForm(), IFormDefault by FormDefaultImpl() {
   }
 }
 
-class BlockCommand : Block(1, 10, "Commands") {
+class BlockCommand : Block("Commands", 1, 10) {
   val u = table(Command)
   val v = table(Client)
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2013-2021 kopiLeft Services SARL, Tunis TN
- * Copyright (c) 1990-2021 kopiRight Managed Solutions GmbH, Wien AT
+ * Copyright (c) 2013-2022 kopiLeft Services SARL, Tunis TN
+ * Copyright (c) 1990-2022 kopiRight Managed Solutions GmbH, Wien AT
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -46,8 +46,7 @@ interface IReportDefault {
   val cmdXLSX: Command
 }
 
-open class ReportDefaultImpl : IReportDefault, Report() {
-  override val title: String = ""
+open class ReportDefaultImpl : IReportDefault, Report("") {
 
   // --------------------MENUS-----------------
   final override val file = menu("File")
@@ -56,7 +55,6 @@ open class ReportDefaultImpl : IReportDefault, Report() {
 
   // --------------------Actors-----------------
   override val csv = actor(
-    ident = "CSV",
     menu = action,
     label = "CSV",
     help = "CSV Format",
@@ -66,7 +64,6 @@ open class ReportDefaultImpl : IReportDefault, Report() {
   }
 
   override val xls = actor(
-    ident = "XLS",
     menu = action,
     label = "XLS",
     help = "Excel (XLS) Format",
@@ -76,7 +73,6 @@ open class ReportDefaultImpl : IReportDefault, Report() {
   }
 
   override val xlsx = actor(
-    ident = "XLSX",
     menu = action,
     label = "XLSX",
     help = "Excel (XLSX) Format",
@@ -86,7 +82,6 @@ open class ReportDefaultImpl : IReportDefault, Report() {
   }
 
   override val pdf = actor(
-    ident = "PDF",
     menu = action,
     label = "PDF",
     help = "PDF Format",
