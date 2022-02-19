@@ -45,7 +45,7 @@ dependencies {
 
   testImplementation(kotlin("test-junit"))
 
-  implementation("org.kopi", "galite-core", "1.0.0-beta.4")
+  implementation("org.kopi", "galite-core", "1.0.0")
   implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
 
   implementation("com.vaadin", "vaadin-core") {

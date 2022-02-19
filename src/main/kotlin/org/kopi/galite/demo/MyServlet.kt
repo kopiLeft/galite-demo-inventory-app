@@ -19,7 +19,7 @@ package org.kopi.galite.demo
 import org.kopi.galite.visual.ui.vaadin.base.GaliteServlet
 
 /**
- * A customized servlet.
+ * A customized servlet that initializes database.
  */
 class MyServlet : GaliteServlet() {
 

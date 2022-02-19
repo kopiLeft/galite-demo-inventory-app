@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <modules>
-    <!--Inventory-->
-    <module ident="1000" label="CLIENTS" help="Clients" />
+    <!--Clients-->
+    <module ident="1000" label="CLIENTS" help="Clients management" />
     <module ident="1001" label="Client form" help="Clients management" />
     <!--Commands-->
     <module ident="2000" label="COMMANDS" help="Commands management" />

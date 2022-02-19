@@ -22,13 +22,11 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 
-import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.nextIntVal
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.kopi.galite.visual.db.Users
-import org.kopi.galite.visual.type.Decimal
 import org.kopi.galite.visual.type.Week
 
 fun migration3() {
@@ -91,10 +89,10 @@ fun addClient(id: Int,
 }
 
 fun addProducts() {
-  addProduct(0, "description Product 0", 1, "tax 1", "Men", "Supplier 0", Decimal("263").value)
-  addProduct(1, "description Product 1", 2, "tax 2", "Men","Supplier 0", Decimal("314").value)
-  addProduct(2, "description Product 2", 3, "tax 2", "Women","Supplier 0", Decimal("180").value)
-  addProduct(3, "description Product 3", 1, "tax 3", "Children","Supplier 0", Decimal("65").value)
+  addProduct(0, "description Product 0", 1, "tax 1", "Men", "Supplier 0", BigDecimal("263"))
+  addProduct(1, "description Product 1", 2, "tax 2", "Men","Supplier 0", BigDecimal("314"))
+  addProduct(2, "description Product 2", 3, "tax 2", "Women","Supplier 0", BigDecimal("180"))
+  addProduct(3, "description Product 3", 1, "tax 3", "Children","Supplier 0", BigDecimal("65"))
 }
 
 fun addSales() {
@@ -161,10 +159,10 @@ fun addTaxRule(id: Int, taxName: String, rate: Int, information: String? = null)
 }
 
 fun addBills() {
-  addBill(0, "Bill address 0", LocalDate.parse("2018-09-13"), Decimal("3129.7").value, 0)
-  addBill(1, "Bill address 1", LocalDate.parse("2020-02-16"), Decimal("1149.24").value, 1)
-  addBill(2, "Bill address 2", LocalDate.parse("2019-05-13"), Decimal("219.6").value, 2)
-  addBill(3, "Bill address 3", LocalDate.parse("2019-01-12"), Decimal("146.9").value, 3)
+  addBill(0, "Bill address 0", LocalDate.parse("2018-09-13"), BigDecimal("3129.7"), 0)
+  addBill(1, "Bill address 1", LocalDate.parse("2020-02-16"), BigDecimal("1149.24"), 1)
+  addBill(2, "Bill address 2", LocalDate.parse("2019-05-13"), BigDecimal("219.6"), 2)
+  addBill(3, "Bill address 3", LocalDate.parse("2019-01-12"), BigDecimal("146.9"), 3)
 }
 
 fun addBill(num: Int, address: String, date: LocalDate, amount: BigDecimal, ref: Int) {
@@ -180,9 +178,9 @@ fun addBill(num: Int, address: String, date: LocalDate, amount: BigDecimal, ref:
 fun addTasks() {
   val currentWeek = Week.now()
 
-  addTask(currentWeek.getDate(1).toSql().toLocalDate(), LocalTime.of(8, 0, 0), LocalTime.of(10, 30, 0), "Conception", "desc 2")
-  addTask(currentWeek.getDate(1).toSql().toLocalDate(), LocalTime.of(14, 0, 0), LocalTime.of(16, 0, 0), "Codage", "desc 2")
-  addTask(currentWeek.getDate(4).toSql().toLocalDate(), LocalTime.of(11, 0, 0), LocalTime.of(12, 30, 0), "Validation", "desc 2")
+  addTask(currentWeek.getDate(1), LocalTime.of(8, 0, 0), LocalTime.of(10, 30, 0), "Conception", "desc 2")
+  addTask(currentWeek.getDate(1), LocalTime.of(14, 0, 0), LocalTime.of(16, 0, 0), "Codage", "desc 2")
+  addTask(currentWeek.getDate(4), LocalTime.of(11, 0, 0), LocalTime.of(12, 30, 0), "Validation", "desc 2")
 }
 
 fun addTask(date: LocalDate, from: LocalTime, to: LocalTime, description1: String, description2: String) {
@@ -229,10 +227,10 @@ fun addCmd(num: Int, client: Int, date: LocalDate, payment: String, status: Stri
 }
 
 fun addBillPrdts() {
-  addBillPrdt(0, 10, Decimal("2630").value, Decimal("3129.7").value)
-  addBillPrdt(1, 3, Decimal("942").value, Decimal("1149.24").value)
-  addBillPrdt(2, 1, Decimal("180").value, Decimal("219.6").value)
-  addBillPrdt(3, 2, Decimal("130").value, Decimal("146.9").value)
+  addBillPrdt(0, 10, BigDecimal("2630"), BigDecimal("3129.7"))
+  addBillPrdt(1, 3, BigDecimal("942"), BigDecimal("1149.24"))
+  addBillPrdt(2, 1, BigDecimal("180"), BigDecimal("219.6"))
+  addBillPrdt(3, 2, BigDecimal("130"), BigDecimal("146.9"))
 }
 
 fun addBillPrdt(id: Int, quantity: Int, amount: BigDecimal, amountWithTaxes: BigDecimal) {
