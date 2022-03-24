@@ -33,6 +33,7 @@ gretty {
 
 
 val vaadinVersion = "21.0.9"
+val galiteVersion = "1.1.0-SNAPSHOT"
 val karibuTestingVersion = "1.2.5"
 val h2Version = "1.4.199"
 val postgresNGVersion = "0.8.9"
@@ -45,7 +46,8 @@ dependencies {
 
   testImplementation(kotlin("test-junit"))
 
-  implementation("org.kopi", "galite-core", "1.0.0")
+  implementation("org.kopi", "galite-core", galiteVersion)
+  testImplementation("org.kopi", "galite-testing", galiteVersion)
   implementation("org.jetbrains.exposed", "exposed-jdbc", exposedVersion)
 
   implementation("com.vaadin", "vaadin-core") {
@@ -60,9 +62,12 @@ dependencies {
 }
 
 repositories {
-  jcenter()
+  mavenCentral()
   maven {
     url = uri("https://maven.vaadin.com/vaadin-addons")
+  }
+  maven {
+    url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
   }
 }
 
